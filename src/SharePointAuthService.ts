@@ -9,7 +9,7 @@ class SharePointAuthService {
     const tenantId = 'ebd31e07-e19a-41fb-aebf-7d2ab2391202';
     const clientId = '7e489452-1f59-4673-bad9-4fde66e11bce';
     const redirectUri = encodeURIComponent(
-      'https://stackblitz-starters-bhy9pa.stackblitz.io/'
+      'https://stackblitz-starters-n9ajxi.stackblitz.io/'
     );
 
     const authUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=offline_access%20user.read%20sites.read.all`;

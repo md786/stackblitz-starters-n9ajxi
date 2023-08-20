@@ -8,7 +8,7 @@ const SharePointLogin: React.FC = () => {
   const handleLogin = async () => {
     authService.openLoginWindow();
     // Assume we get access token somehow after successful login
-    //setAccessToken(authService.accessToken);
+    //setAccessToken(authService.authCode);
 
     // Fetch site details using the access token
     if (accessToken) {
