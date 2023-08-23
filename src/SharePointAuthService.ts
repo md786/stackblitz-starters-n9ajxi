@@ -18,7 +18,7 @@ class SharePointAuthService {
     const loginWindow = window.open(authUrl, '_blank', windowFeatures);
 
     // Polling to capture the authorization code
-    const pollTimer = setInterval(() => {
+    const pollTimer = setInterval(async () => {
       try {
         const url = loginWindow.location.href;
 
@@ -32,13 +32,48 @@ class SharePointAuthService {
 
           // Save the authorization code to the state
           this.authCode = authorizationCode;
-
+          const accessToken = await this.getAccessToken(this.authCode);
           console.log(`Authorization code received: ${authorizationCode}`);
         }
       } catch (error) {
         // Continue polling or handle errors
       }
     }, 100);
+  }
+
+  public async getAccessToken(
+    authorizationCode: string
+  ): Promise<string | null> {
+    const tenantId = 'ebd31e07-e19a-41fb-aebf-7d2ab2391202';
+    const clientId = '7e489452-1f59-4673-bad9-4fde66e11bce';
+    const redirectUri = encodeURIComponent(
+      'https://stackblitz-starters-n9ajxi.stackblitz.io/'
+    );
+    const tokenEndpoint =
+      'https://login.microsoftonline.com/{tenantId}/oauth2/v2.0/token';
+
+    const clientSecret = '-~68Q~.h9BgbYGOKVFIUlYbnZGYmQoOHpdHNsb9-'; // Use your actual client secret
+
+    try {
+      const response = await axios.post(tokenEndpoint, null, {
+        params: {
+          client_id: clientId,
+          scope: 'offline_access user.read sites.read.all',
+          code: authorizationCode,
+          redirect_uri: redirectUri,
+          grant_type: 'authorization_code',
+          client_secret: clientSecret,
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      return response.data.access_token;
+    } catch (error) {
+      console.error('Failed to obtain access token:', error);
+      return null;
+    }
   }
   /*
   setAccessToken(token: string): void {
