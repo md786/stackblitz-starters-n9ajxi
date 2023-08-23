@@ -12,7 +12,7 @@ class SharePointAuthService {
       'https://stackblitz-starters-n9ajxi.stackblitz.io/'
     );
 
-    const authUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=offline_access%20user.read%20sites.read.all`;
+    const authUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/authorize?prompt=select_account&client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=offline_access%20user.read%20sites.read.all`;
     const windowFeatures =
       'location=yes,height=600,width=800,scrollbars=yes,status=yes';
     const loginWindow = window.open(authUrl, '_blank', windowFeatures);
